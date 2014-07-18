@@ -27,9 +27,9 @@ class clustering:
                 if self.debug:
                     print 'point_2: %f %f' % (point_2.latit, point_2.longit)
                 if point_1 not in dist:
-                    dist[point_1] = math.sqrt(math.pow(point_1.latit - point_2.latit,2.0) + math.pow(point_1.longit - point_2.longit,2.0))       
+                    dist[point_1] = ((point_1.latit - point_2.latit)**2 + (point_1.longit - point_2.longit)**2)**0.5       
                 else:
-                    dist[point_1] += math.sqrt(math.pow(point_1.latit - point_2.latit,2.0) + math.pow(point_1.longit - point_2.longit,2.0))
+                    dist[point_1] += ((point_1.latit - point_2.latit)**2 + (point_1.longit - point_2.longit)**2)**0.5
         if self.debug:
             for key, value in dist.items():
                 print "(%f, %f) ==> %f" % (key.latit,key.longit,value)
@@ -94,7 +94,7 @@ class clustering:
                 print "point(%f,%f)" % (point.latit, point.longit)
             #find the best cluster for this node
             for mean in self.means:
-                dist.append(math.sqrt(math.pow(point.latit - mean.latit,2.0) + math.pow(point.longit - mean.longit,2.0)))
+                dist.append(((point.latit - mean.latit)**2 + (point.longit - mean.longit)**2)**0.5)
             #let's find the smallest mean
             if self.debug:
                 print dist
@@ -118,7 +118,7 @@ class clustering:
             if self.debug:
                 print "mean_1(%f,%f)" % (mean_1.latit, mean_1.longit)
                 print "mean_2(%f,%f)" % (mean_2.latit, mean_2.longit)            
-            if math.sqrt(math.pow(mean_1.latit - mean_2.latit,2.0) + math.pow(mean_1.longit - mean_2.longit,2.0)) > threshold:
+            if ((mean_1.latit - mean_2.latit)**2 + (mean_1.longit - mean_2.longit)**2)**0.5 > threshold:
                 return False
         return True
     #debug function: print cluster points
